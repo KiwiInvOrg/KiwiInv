@@ -5,67 +5,70 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Badge } from "@/components/ui/badge";
 import { JobCard } from "./job-card";
+import { Badge } from "@/components/ui/badge";
 import type { KanbanJob, JobStatus } from "@/types/api";
-import { cn } from "@/lib/utils";
-
-const columnConfig: Record<
-  JobStatus,
-  { label: string; color: string; bg: string }
-> = {
-  quote: { label: "Quote", color: "text-blue-700", bg: "bg-blue-50" },
-  in_progress: {
-    label: "In Progress",
-    color: "text-amber-700",
-    bg: "bg-amber-50",
-  },
-  completed: {
-    label: "Completed",
-    color: "text-green-700",
-    bg: "bg-green-50",
-  },
-  delivered: {
-    label: "Delivered",
-    color: "text-purple-700",
-    bg: "bg-purple-50",
-  },
-};
 
 interface KanbanColumnProps {
   status: JobStatus;
   jobs: KanbanJob[];
-  onJobClick?: (job: KanbanJob) => void;
+  onJobClick: (job: KanbanJob) => void;
 }
 
+const columnConfig = {
+  quote: {
+    title: "Quote",
+    dotColor: "bg-status-quote",
+    bgColor: "bg-[var(--color-status-quote-tint)]",
+  },
+  in_progress: {
+    title: "In Progress",
+    dotColor: "bg-status-progress",
+    bgColor: "bg-[var(--color-status-progress-tint)]",
+  },
+  completed: {
+    title: "Completed",
+    dotColor: "bg-status-completed",
+    bgColor: "bg-[var(--color-status-completed-tint)]",
+  },
+  delivered: {
+    title: "Delivered",
+    dotColor: "bg-status-delivered",
+    bgColor: "bg-[var(--color-status-delivered-tint)]",
+  },
+};
+
 export function KanbanColumn({ status, jobs, onJobClick }: KanbanColumnProps) {
-  const { setNodeRef, isOver } = useDroppable({ id: status });
+  const { setNodeRef } = useDroppable({ id: status });
   const config = columnConfig[status];
+  const jobIds = jobs.map((job) => job.id);
 
   return (
-    <div
-      className={cn(
-        "flex flex-col rounded-lg border bg-zinc-50/50 min-h-[calc(100vh-8rem)]",
-        isOver && "ring-2 ring-zinc-300"
-      )}
-    >
-      <div className={cn("flex items-center gap-2 px-3 py-2.5 rounded-t-lg", config.bg)}>
-        <h3 className={cn("text-sm font-semibold", config.color)}>
-          {config.label}
-        </h3>
-        <Badge variant="secondary" className="text-xs h-5 min-w-[20px] justify-center">
+    <div className="flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card">
+      {/* Column Header */}
+      <div className="flex items-center gap-3 border-b border-border px-4 py-3">
+        <div className={`h-2.5 w-2.5 rounded-full ${config.dotColor}`} />
+        <h3 className="font-semibold text-foreground">{config.title}</h3>
+        <Badge variant="secondary" className="ml-auto text-xs">
           {jobs.length}
         </Badge>
       </div>
-      <div ref={setNodeRef} className="flex-1 p-2 space-y-2">
-        <SortableContext
-          items={jobs.map((j) => j.id)}
-          strategy={verticalListSortingStrategy}
-        >
+
+      {/* Droppable Area */}
+      <div
+        ref={setNodeRef}
+        className={`flex-1 space-y-2 overflow-y-auto p-3 ${config.bgColor}`}
+      >
+        <SortableContext items={jobIds} strategy={verticalListSortingStrategy}>
           {jobs.map((job) => (
             <JobCard key={job.id} job={job} onClick={onJobClick} />
           ))}
         </SortableContext>
+        {jobs.length === 0 && (
+          <div className="flex h-24 items-center justify-center rounded-lg border-2 border-dashed border-border">
+            <p className="text-sm text-muted-foreground">No jobs</p>
+          </div>
+        )}
       </div>
     </div>
   );

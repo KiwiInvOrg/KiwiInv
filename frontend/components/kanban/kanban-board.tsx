@@ -15,7 +15,6 @@ import { useKanbanBoard, useUpdateJobStatus } from "@/lib/hooks/use-kanban";
 import { KanbanColumn } from "./kanban-column";
 import { KanbanSkeleton } from "./kanban-skeleton";
 import { JobCard } from "./job-card";
-import { CreateJobDialog } from "./create-job-dialog";
 import { JobDetailSheet } from "@/components/jobs/job-detail-sheet";
 import type { KanbanJob, JobStatus } from "@/types/api";
 
@@ -62,7 +61,6 @@ export function KanbanBoard() {
   );
 
   const handleJobClick = useCallback((job: KanbanJob) => {
-    // Only open if not dragging
     setSelectedJob(job);
   }, []);
 
@@ -70,10 +68,15 @@ export function KanbanBoard() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <p className="text-zinc-500">
-          Failed to load kanban board. Is the backend running?
-        </p>
+      <div className="flex h-64 items-center justify-center rounded-lg border border-destructive/50 bg-destructive/10">
+        <div className="text-center">
+          <p className="font-semibold text-destructive">
+            Failed to load kanban board
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Is the backend running on port 8080?
+          </p>
+        </div>
       </div>
     );
   }
@@ -81,18 +84,14 @@ export function KanbanBoard() {
   if (!board) return null;
 
   return (
-    <div>
-      <div className="flex items-center justify-between px-6 py-4">
-        <h1 className="text-lg font-semibold">Job Board</h1>
-        <CreateJobDialog />
-      </div>
+    <>
       <DndContext
         sensors={sensors}
         collisionDetection={closestCorners}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
-        <div className="grid grid-cols-4 gap-4 px-6 pb-6">
+        <div className="grid h-full grid-cols-4 gap-4">
           {COLUMNS.map((status) => (
             <KanbanColumn
               key={status}
@@ -109,8 +108,10 @@ export function KanbanBoard() {
       <JobDetailSheet
         job={selectedJob}
         open={!!selectedJob}
-        onOpenChange={(open) => { if (!open) setSelectedJob(null); }}
+        onOpenChange={(open) => {
+          if (!open) setSelectedJob(null);
+        }}
       />
-    </div>
+    </>
   );
 }
