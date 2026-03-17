@@ -9,6 +9,29 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Kiwi Cabins Brand Colors (verified with oklch.com) */
+  --color-brand-green: oklch(0.396 0.083 159.51);        /* #2D5F3F */
+  --color-brand-green-light: oklch(0.496 0.083 159.51);
+  --color-brand-green-dark: oklch(0.296 0.083 159.51);
+  --color-brand-brown: oklch(0.538 0.053 63.47);         /* #8B6F47 */
+  --color-brand-brown-light: oklch(0.638 0.053 63.47);
+  --color-brand-brown-dark: oklch(0.438 0.053 63.47);
+  
+  /* Status Colors */
+  --color-status-quote: oklch(0.60 0.20 250);            /* Blue */
+  --color-status-quote-tint: oklch(0.95 0.02 250);
+  --color-status-progress: oklch(0.75 0.15 70);          /* Amber */
+  --color-status-progress-tint: oklch(0.95 0.015 70);
+  --color-status-completed: oklch(0.65 0.18 155);        /* Green */
+  --color-status-completed-tint: oklch(0.95 0.018 155);
+  --color-status-delivered: oklch(0.62 0.22 290);        /* Purple */
+  --color-status-delivered-tint: oklch(0.95 0.022 290);
+  
+  /* Background Colors */
+  --color-background-warm: oklch(0.98 0.002 85);         /* #FAFAF9 */
+  
+  /* Sidebar colors */
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -17,11 +40,15 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+  
+  /* Chart colors */
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+  
+  /* UI colors */
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -38,6 +65,8 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  
+  /* Border radius */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -48,77 +77,68 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
+  /* Base colors */
+  --background: oklch(0.98 0.002 85);        /* Warm off-white background */
+  --foreground: oklch(0.145 0 0);            /* Near-black text */
+  
+  /* Card */
+  --card: oklch(1 0 0);                      /* Pure white cards */
   --card-foreground: oklch(0.145 0 0);
+  
+  /* Popover */
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+  
+  /* Primary (brand green) */
+  --primary: oklch(0.396 0.083 159.51);      /* #2D5F3F */
+  --primary-foreground: oklch(0.985 0 0);    /* White text on green */
+  
+  /* Secondary */
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
+  
+  /* Muted */
   --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted-foreground: oklch(0.556 0 0);      /* Gray text */
+  
+  /* Accent */
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
+  
+  /* Destructive */
+  --destructive: oklch(0.577 0.245 27.325);  /* Red */
+  
+  /* Border */
+  --border: oklch(0.922 0 0);                /* Light gray borders */
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  
+  /* Ring (focus) */
+  --ring: oklch(0.396 0.083 159.51);         /* Brand green for focus rings */
+  
+  /* Charts */
   --chart-1: oklch(0.809 0.105 251.813);
   --chart-2: oklch(0.623 0.214 259.815);
   --chart-3: oklch(0.546 0.245 262.881);
   --chart-4: oklch(0.488 0.243 264.376);
   --chart-5: oklch(0.424 0.199 265.638);
+  
+  /* Border radius */
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
+  
+  /* Sidebar */
+  --sidebar: oklch(1 0 0);                   /* White sidebar background */
+  --sidebar-foreground: oklch(0.145 0 0);    /* Dark text */
+  --sidebar-primary: oklch(0.396 0.083 159.51);   /* Brand green for active */
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent: oklch(0.97 0 0);         /* Light gray hover */
   --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-border: oklch(0.922 0 0);        /* Light gray border */
+  --sidebar-ring: oklch(0.396 0.083 159.51); /* Brand green focus */
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 transition-colors duration-150 ease-out;
   }
   body {
     @apply bg-background text-foreground;
